@@ -9,7 +9,7 @@ setup(
     version = '0.1.0',
     author = 'Nikolaos Giarelis',
     author_email = 'giarelis@ceid.upatras.gr',
-    description = 'LMRank is a keyphrase extraction approach that utilizes spaCy and state-of-the-art sentence transformersperforms keyword extraction with state-of-the-art sentence transformer models.',
+    description = 'LMRank is a keyphrase extraction approach that utilizes spaCy and state-of-the-art sentence transformer models.',
     long_description = long_description,
     long_description_content_type = 'text/markdown',
     url = 'https://github.com/NC0DER/LMRank',
