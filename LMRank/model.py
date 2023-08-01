@@ -80,7 +80,7 @@ class LMRank:
             'de': 'German',
             'it': 'Italian',
             'ja': 'Japanese',
-            'nb': 'Norwegian Borkmal',
+            'nb': 'Norwegian Bokmal',
             'pt': 'Portuguese',
             'es': 'Spanish',
             'sv': 'Swedish'
@@ -243,7 +243,10 @@ class LMRank:
         if language_code == 'en':
             model = self.model
         else:
-            model = self.multilingual_model
+            if self.hardcoded_model:
+                model = self.model
+            else:
+                model = self.multilingual_model
 
         if multi_processing:
             # Start a multi process pool and select the computing device.
@@ -273,7 +276,10 @@ class LMRank:
         if language_code == 'en':
             model = self.model
         else:
-            model = self.multilingual_model
+            if self.hardcoded_model:
+                model = self.model
+            else:
+                model = self.multilingual_model
 
         return model.max_seq_length
 

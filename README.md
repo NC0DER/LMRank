@@ -1,3 +1,8 @@
+[![Python-Versions](https://img.shields.io/badge/python-3.7_|_3.8_|_3.9|_3.10-blue.svg)]()
+[![Software-License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/NC0DER/LMRank/blob/main/LICENSE)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1rzjfnkKQ7EDdEFaLDhJspw7WdcKh9ipV?usp=sharing)
+[![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/)
+
 # LMRank
 
 This repository hosts code for the paper:
@@ -5,13 +10,12 @@ This repository hosts code for the paper:
 * [LMRank: Utilizing Pre-Trained Language Models and Dependency Parsing for Keyphrase Extraction](https://ieeexplore.ieee.org/document/10179894)
 
 ## About
-LMRank is a keyphrase extraction approach, that builds on recent advancements in the field of Keyphrase Extraction.
-Specifically, it utilizes dependency parsing, a technique which forms more coherent candidate keyphrase, as well as a highly accurate `sentence-transformers` model to semantically compare the keyphrases with the text and extract the most relevant. If you have any practical or research questions take a quick look at the [FAQ](https://github.com/NC0DER/LMRank/wiki/Frequently-Asked-Questions-(FAQ)). As shown in the FAQ, LMRank currently supports 14 languages including English, Greek and others.
+LMRank is a keyphrase extraction approach, that builds on recent advancements in the fields of Keyphrase Extraction and Deep learning. Specifically, it utilizes dependency parsing, a technique which forms more coherent candidate keyphrases, as well as a highly accurate `sentence-transformers` models to semantically compare the candidate keyphrases with the text and extract the most relevant ones. 
 
+If you have any practical or research questions take a quick look at the [FAQ](https://github.com/NC0DER/LMRank/wiki/Frequently-Asked-Questions-(FAQ)). As shown in the FAQ, LMRank currently supports 14 languages including English, Greek and others.
 
 ## Installation
 * Run `pip install git+https://github.com/NC0DER/LMRank/`
-* Minimum supported version: `Python 3.7`
 
 ## Example
 ```python
@@ -35,7 +39,7 @@ results = model.extract_keyphrases(text, language_code = 'en', top_n = 10)
 print(results)
 ```
 
-## Results:
+## Results
 
 ```python
 [('machine learning', 0.012630817497539287),
