@@ -1,4 +1,4 @@
-[![Python-Versions](https://img.shields.io/badge/python-3.7_|_3.8_|_3.9|_3.10-blue.svg)]()
+[![Python-Versions](https://img.shields.io/badge/python-3.7_|_3.8_|_3.9_|_3.10-blue.svg)]()
 [![Software-License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/NC0DER/LMRank/blob/main/LICENSE)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1rzjfnkKQ7EDdEFaLDhJspw7WdcKh9ipV?usp=sharing)
 [![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/)
