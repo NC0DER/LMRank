@@ -35,9 +35,9 @@ results = model.extract_keyphrases(text, language_code = 'en', top_n = 10)
 print(results)
 ```
 
-Results:
+## Results:
 
-```
+```python
 [('machine learning', 0.012630817497539287),
 ('training data', 0.012126753048877012),
 ('data mining', 0.01074470174604561),
