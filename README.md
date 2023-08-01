@@ -4,8 +4,14 @@ This repository hosts code for the paper:
 
 * [LMRank: Utilizing Pre-Trained Language Models and Dependency Parsing for Keyphrase Extraction](https://ieeexplore.ieee.org/document/10179894)
 
-## Datasets
-Available in [this link](https://drive.google.com/drive/folders/1ziElrM1Y3Wp1vLK21OPtsN7Da-bbR7Sb)
+## About
+LMRank is a keyphrase extraction approach, that builds on recent advancements in the field of Keyphrase Extraction.
+Specifically, it utilizes dependency parsing, a technique which forms more coherent candidate keyphrase, as well as a highly accurate `sentence-transformers` model to semantically compare the keyphrases with the text and extract the most relevant. If you have any practical or research questions take a quick look at the [FAQ](https://github.com/NC0DER/LMRank/wiki/Frequently-Asked-Questions-(FAQ)). As shown in the FAQ, LMRank currently supports 14 languages including English, Greek and others.
+
+
+## Installation
+* Run `pip install git+https://github.com/NC0DER/LMRank/`
+* Minimum supported version: `Python 3.7`
 
 ## Example
 ```python
@@ -24,18 +30,27 @@ text = """
       related to computational statistics, which focuses on making predictions using computers.
  """
 model = LMRank()
-results = model.extract_keyphrases(text, top_n = 10)
+results = model.extract_keyphrases(text, language_code = 'en', top_n = 10)
 
 print(results)
 ```
 
-## Test Results / Benchmark
-Setup the `base_path` for the dataset directory and run `main()`.  
-Setup the `output_path` for the `lmrank_timings.csv` and run `benchmark()`.  
+Results:
 
-## Installation
-* Run `pip install git+https://github.com/NC0DER/LMRank/`
-* Minimum supported version: `Python 3.6`
+```
+[('machine learning', 0.012630817497539287),
+('training data', 0.012126753048877012),
+('data mining', 0.01074470174604561),
+('inferences', 0.010638922139139086),
+('neural networks', 0.010636195886216913),
+('statistical learning', 0.010432026486056019),
+('artificial intelligence', 0.010388909274319064),
+('algorithms', 0.009517552425412449),
+('unsupervised learning', 0.009076004950492262),
+('predictive analytics', 0.008616772762298034)]
+```
+
+To see a list of supported languages and their codes, see the [FAQ](https://github.com/NC0DER/LMRank/wiki/Frequently-Asked-Questions-(FAQ)).
 
 ## Contributors
 * Nikolaos Giarelis (giarelis@ceid.upatras.gr)
