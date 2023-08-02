@@ -117,7 +117,7 @@ class LMRank:
 
     def extract_candidate_keyphrases(
             self: LMRank, text: str, language_code: str, top_n: int, 
-            sentence_seps = '!?.', deduplicate: bool = True, 
+            sentence_seps: str = '!?.', deduplicate: bool = True, 
             keep_nouns_adjs: bool = True,
         ) -> List[Tuple[str, int]]:
 
@@ -172,32 +172,36 @@ class LMRank:
         # The document object is stored in the class state.
         self.doc = nlp(self.text)
 
-        candidate_keyphrases = [
-            (remove_last_seps(chunk.text.lower(), sentence_seps), chunk.start)
-            for chunk in self.doc.noun_chunks
-            if chunk.text.lower() not in nlp.Defaults.stop_words
-            and chunk[0].pos_ not in {'PRON', 'PART'}
-            and all(
-                term.pos_ in {'PROPN','NOUN', 'ADJ'} 
-                if keep_nouns_adjs else True for term in chunk
-            )
-            and len(chunk.text) > 2
-            and not chunk.text[:1].isdigit()
-        ]
+        # Form the candidate keyphrases either with noun phrases or dependency parsing.
+        if language_code == 'el':
+            candidate_keyphrases = form_candidate_keyphrases_as_noun_phrases(nlp, self.doc, sentence_seps)
+        else:
+            candidate_keyphrases = [
+                (remove_last_seps(chunk.text.lower(), sentence_seps), chunk.start)
+                for chunk in self.doc.noun_chunks
+                if chunk.text.lower() not in nlp.Defaults.stop_words
+                and chunk[0].pos_ not in {'PRON', 'PART'}
+                and all(
+                    term.pos_ in {'PROPN','NOUN', 'ADJ'} 
+                    if keep_nouns_adjs else True for term in chunk
+                )
+                and len(chunk.text) > 2
+                and not chunk.text[:1].isdigit()
+            ]
 
-        # Sort noun chunks by keyphrase text and groupby duplicate entries.
-        # Only the first occurence of each keyphrase is preserved.
-        candidate_keyphrases = {
-            key: next(group)[1]
-            for key, group in groupby(
-                sorted(candidate_keyphrases, key = itemgetter(0)), 
-                itemgetter(0))
-        }
-        
+            # Sort noun chunks by keyphrase text and groupby duplicate entries.
+            # Only the first occurence of each keyphrase is preserved.
+            candidate_keyphrases = {
+                key: next(group)[1]
+                for key, group in groupby(
+                    sorted(candidate_keyphrases, key = itemgetter(0)), 
+                    itemgetter(0))
+            }
+
         # Removing near string duplicates from the candidate_keyphrases.
         # Get close matches is utilized, which finds the top-n most 
         # similar close matches. The first result is discarded, 
-        # since it is the keyphrase we are using in the search.
+        # as it is the keyphrase we are using in the search.
         # Since the candidate keyphrases are already sorted, 
         # the shortest phrase is kept.
         if deduplicate:
@@ -205,7 +209,10 @@ class LMRank:
                 close_matches = get_close_matches(item, candidate_keyphrases.keys(), 
                                                   cutoff = 0.65, n = top_n)[1:]
                 for close_match in close_matches:
-                    del candidate_keyphrases[close_match]
+                    # This check removes longer keyphrases.
+                    if len(close_match) > len(item):
+                        del candidate_keyphrases[close_match]
+
         return list(candidate_keyphrases.items())
 
     

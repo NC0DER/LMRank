@@ -10,7 +10,7 @@ This repository hosts code for the paper:
 * [LMRank: Utilizing Pre-Trained Language Models and Dependency Parsing for Keyphrase Extraction](https://ieeexplore.ieee.org/document/10179894)
 
 ## About
-LMRank is a keyphrase extraction approach, that builds on recent advancements in the fields of Keyphrase Extraction and Deep learning. Specifically, it utilizes dependency parsing, a technique which forms more coherent candidate keyphrases, as well as a highly accurate `sentence-transformers` models to semantically compare the candidate keyphrases with the text and extract the most relevant ones. 
+LMRank is a keyphrase extraction approach, that builds on recent advancements in the fields of Keyphrase Extraction and Deep learning. Specifically, it utilizes dependency parsing, a technique which forms more coherent candidate keyphrases, as well as highly accurate `sentence-transformers` models to semantically compare the candidate keyphrases with the text and extract the most relevant ones. 
 
 If you have any practical or research questions take a quick look at the [FAQ](https://github.com/NC0DER/LMRank/wiki/Frequently-Asked-Questions-(FAQ)). As shown in the FAQ, LMRank currently supports 14 languages including English, Greek and others.
 

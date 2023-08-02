@@ -1,10 +1,14 @@
 import sys
 import spacy
 
-from typing import TypeVar, Dict, List
+from typing import TypeVar, Dict, List, Tuple
+from itertools import groupby
+from operator import itemgetter
+from spacy.matcher import Matcher
 
 # Generic type class for spacy model objects.
 Model = TypeVar('Model')
+SpacyDoc = TypeVar('SpacyDoc')
 
 language_nlp_model_associations = {
     'en': 'en_core_web_sm',
@@ -32,14 +36,16 @@ def retrieve_spacy_model(
     the required nlp model given a correct language code.
     It also disables a list of unnecessary components.
     
-    Input
-    ----------
-    model_name: path to spaCy model (str).
+    Input:
+        model_name: (str)
+            path to spaCy model.
 
-    Output
-    -------
-    nlp: the spacy nlp object (Model).
-
+        supported_languages: (Dict[str, str])
+            the list of dictionaries of supported languages and their codes.
+    
+    Output:
+        nlp: (Model)
+            the spacy nlp object.
     """
     # Find the correct nlp model name based on the provided language code.
     model_name = language_nlp_model_associations.get(language_code)
@@ -61,6 +67,88 @@ def retrieve_spacy_model(
         spacy.cli.download(model_name)
         nlp = spacy.load(model_name)
     return nlp
+
+
+def form_candidate_keyphrases_as_noun_phrases(
+        nlp: Model, doc: SpacyDoc, sentence_seps: str = '!?.'
+    ) -> List[Tuple[str, int]]:
+    """
+    Function which extracts noun phrases,
+    consisting of adjectives, nouns and proper nouns.
+    This is used in case the noun_chunks component 
+    of spaCy does not properly work for a specific language.
+
+    Input:
+        nlp: (Model)
+            the nlp spaCy model.
+
+        doc: (SpacyDoc)
+            the spaCy Doc Object.
+
+        sentence_seps: (str)
+            String containing delimiters that separate sentences.
+            These are removed from the end of each candidate keyphrase.
+
+    Output:
+        noun phrases: (List[Tuple[str, int]])
+        a list of noun phrases and their first positional occurences.
+    """
+
+    # Define the patterns for extraction.
+    adj_noun_phrases_patterns = [
+        [{'POS': 'NOUN', 'OP': '+'}],
+        [{'POS': 'ADJ', 'OP': '+'}, {'POS': 'NOUN', 'OP': '+'}],
+        [{'POS': 'PROPN', 'OP': '+'}]
+    ]
+
+    # Initialize the token matcher with the nlp object vocabulary and add the patterns.
+    matcher = Matcher(nlp.vocab)
+    matcher.add('AdjNounPhrases', adj_noun_phrases_patterns)
+
+    # Keep all noun phrases that have more than two characters.
+    noun_phrases_occurences = [
+        (remove_last_seps(doc[start:end].text, sentence_seps), start)
+        for _, start, end in matcher(doc)
+        if len(doc[start:end].text) > 2
+    ]
+
+    # Construct the set of seen keywords 
+    # that are already part of keyphrases.
+    seen = {
+        word 
+        for noun_phrase, _ in noun_phrases_occurences 
+        if noun_phrase.count(' ')
+        for word in noun_phrase.split()
+    }
+    
+    # Keep only the unseen keywords.
+    refined_noun_phrases_occurences = [
+        (noun_phrase, occurence) 
+        for noun_phrase, occurence in noun_phrases_occurences
+        if noun_phrase.count(' ') or not noun_phrase in seen
+    ]
+
+    # Sort noun phrases by keyphrase text and groupby duplicate entries.
+    # Only the first occurence of each keyphrase is preserved.
+    candidate_keyphrases = {
+            key: next(group)[1]
+            for key, group in groupby(
+                sorted(refined_noun_phrases_occurences, key = itemgetter(0)), 
+                itemgetter(0))
+    }
+
+    # Some keyphrases may have a keyword that has an erroneous POS tag.
+    # These leads to keyphrases ending where another one is starting.
+    # These partial keyphrases are not kept.
+    candidate_keyphrases_copy = list(candidate_keyphrases)
+    for noun_phrase in candidate_keyphrases_copy:
+        for other_phrase in candidate_keyphrases_copy:
+            if (noun_phrase != other_phrase
+                 and noun_phrase.split()[-1] == other_phrase.split()[0]):
+                del candidate_keyphrases[noun_phrase]
+                break
+
+    return candidate_keyphrases
 
 
 def remove_last_seps(string: str, seps: str = '!?.') -> str:
@@ -94,27 +182,25 @@ def find_nth_occurence(string: str, substring: str, start: int, end: int, n: int
     Function which finds the nth occurence of a 
     substring given a range of the original string.
     
-    Input
-    ------
-    string: (str)
-        the string which the characters are removed from.
-    
-    substring: (str)
-        the substring to be found in the string.
+    Input:
+        string: (str)
+            the string which the characters are removed from.
 
-    start: (int)
-        the positional occurence to start the search from.
+        substring: (str)
+            the substring to be found in the string.
 
-    end: (int)
-        the positional occurence to end the search at.
+        start: (int)
+            the positional occurence to start the search from.
 
-    n: (int)
-        the number of occurence for the substring.
+        end: (int)
+            the positional occurence to end the search at.
 
-    Output
-    -------
-    <object>: (int)
-        the n-th occurence of the substring.
+        n: (int)
+            the number of occurence for the substring.
+
+    Output:
+        <object>: (int)
+            the n-th occurence of the substring.
     """
 
     i = string.find(substring, start, end)
@@ -129,18 +215,16 @@ def create_chunks(string: str, max_token_length: int, token_sep: str = ' ') -> L
     Function which creates chunks of max_token_length from a string,
     by using a token separator.
     
-    Input
-    ------
-    string: (str)
-        the string which the characters are removed from.
-    
-    max_token_length: (int)
-        the maximum number of tokens of the model.
+    Input:
+        string: (str)
+            the string which the characters are removed from.
+        
+        max_token_length: (int)
+            the maximum number of tokens of the model.
 
-    Output
-    -------
-    <object>: (List[str])
-        A list of chunks of at most max_token_length.
+    Output:
+        <object>: (List[str])
+            A list of chunks of at most max_token_length.
     """
     
     # Initialize the chunk range values.
