@@ -30,8 +30,9 @@ setup(
     ],
     python_requires = '>=3.7',
     install_requires = [
-        'faiss-cpu-py36<=1.7.3',
         'spacy<=3.6',
+        'psutil<=5.9.5',
+        'faiss-cpu-py36<=1.7.3',
         'sentence-transformers<=2.2.2'
     ]
 )

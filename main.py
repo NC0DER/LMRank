@@ -100,7 +100,7 @@ def benchmark():
         mean_timings.append(mean(timings))
 
     # Save the input sizes and timings to a csv file.
-    output_path = r'..\lmrank_timings.csv'
+    output_path = r'lmrank_timings.csv'
     with open(output_path, 'w') as f:
         writer = csv.writer(f, delimiter = ',')
         writer.writerows(zip(input_token_sizes, mean_timings))

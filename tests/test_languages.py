@@ -23,7 +23,7 @@ def test_english():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'en', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'machine learning', 'training data', 'data mining', 'inferences', 'neural networks', 'statistical learning', 'artificial intelligence', 'algorithms', 'unsupervised learning', 'predictive analytics'}
+    assert set(keyphrases) == {'machine learning', 'training data', 'correct answers', 'data mining', 'neural networks', 'statistical learning', 'artificial intelligence', 'algorithms', 'unsupervised learning', 'predictive analytics'}
 
 
 def test_greek():
@@ -31,7 +31,7 @@ def test_greek():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'el', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'τεχνητή νοημοσύνη', 'νοημόνων μηχανών', 'ευφυούς συμπεριφοράς', 'επαγωγικά νοήμονες συμπεριφορές', 'υπολογιστικών συστημάτων', 'εγκεφάλου', 'εξαγωγή συμπερασμάτων', 'ψυχολογίας', 'διαδοχική αυτοοργάνωση', 'υπολογιστές'}
+    assert set(keyphrases) == {'τεχνητή νοημοσύνη', 'ανθρώπινη νοημοσύνη', 'νοημόνων μηχανών', 'ευφυούς συμπεριφοράς', 'νοήμονες συμπεριφορές', 'υπολογιστικών συστημάτων', 'εγκεφάλου', 'εξαγωγή συμπερασμάτων', 'ψυχολογίας', 'γλωσσολογίας'}
 
 
 def test_danish():
@@ -39,7 +39,7 @@ def test_danish():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'da', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'menneskets intellektuelle evner –', 'menneskelig forståelse', 'tænkning', 'robotsyn', 'bevidsthed', 'psykologisk forskning', 'computermodellering', 'evnen', 'filosof', 'konkrete ting'}
+    assert set(keyphrases) == {'ubesværet', 'kunstig intelligens', 'menneskets intellektuelle evner –', 'menneskelig forståelse', 'bevidsthed', 'hjernen', 'tænkning', 'psykologisk forskning', 'robotsyn', 'computermodellering'}
 
 
 def test_catalan():
@@ -47,7 +47,7 @@ def test_catalan():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'ca', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'xarxes neuronals artificials', 'decisions intel·ligents', 'màquines capaces', 'planificació automàtica', 'resultats racionals', 'processos', 'abstracte', 'treballs creatius'}
+    assert set(keyphrases) == {'manera intel·ligent', 'xarxes neuronals artificials', 'decisions intel·ligents', 'màquines capaces', 'planificació automàtica', 'resultats racionals', 'processos', 'abstracte', 'treballs creatius'}
 
 
 def test_dutch():
@@ -55,7 +55,7 @@ def test_dutch():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'nl', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'artificiële intelligentie', 'ai-tools', 'mens-geïnspireerde', 'cognitieve', 'marketing-automatisatie', 'begrip', 'genetische algoritmen', 'competenties', 'neurale netwerken', 'andere facetten'}
+    assert set(keyphrases) == {'marketeers', 'kunstmatige intelligentie', 'artificiële intelligentie', 'cognitieve elementen', 'ai-tools', 'mens-geïnspireerde', 'marketing-automatisatie', 'begrip', 'genetische algoritmen', 'neurale netwerken'}
 
 
 def test_finnish():
@@ -63,7 +63,7 @@ def test_finnish():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'fi', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'oppivan tekoälyn harjoittamiseen', 'tekoälytutkimuksessa', 'tekoälyä', 'tilastollinen koneoppiminen', 'algoritmien', 'suositusalgoritmeissa', 'aivojen simulointia', 'intelligence', 'ihmisen ongelmanratkaisun mallintamista', 'tekniikka'}
+    assert set(keyphrases) == {'oppivan tekoälyn harjoittamiseen', 'tekoälytutkimuksessa', 'tekoälyä', 'tilastollinen koneoppiminen', 'algoritmien', 'suositusalgoritmeissa', 'aivojen simulointia', 'intelligence', 'ihmisen ongelmanratkaisun mallintamista', 'tietokoneohjelma'}
 
 
 def test_french():
@@ -71,7 +71,7 @@ def test_french():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'fr', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'intelligence', 'machines intelligentes', 'artificial', 'compréhension', 'nommée rationalité', 'forte complexité logique', 'théories', 'interprétation', 'langage naturel', 'exemple'}
+    assert set(keyphrases) == {'intelligence', 'machines intelligentes', 'artificial', 'compréhension', 'nommée rationalité', 'forte complexité logique', 'nombreuses interprétations', 'théories', 'algorithmique', 'exemple'}
 
 
 def test_german():
@@ -79,7 +79,7 @@ def test_german():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'de', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'künstliche allgemeine intelligenz', 'intelligente verhaltensweisen', 'künstliche neuronale netze', 'wissensmodellierung', 'artificial', 'menschliche fähigkeiten', 'allgemeinem verständnis', 'kommunikationswissenschaft', 'bewusstsein', 'deep learning computer vision'}
+    assert set(keyphrases) == {'bedeutende fortschritte', 'künstliche intelligenz', 'intelligente verhaltensweisen', 'künstliche neuronale netze', 'wissensmodellierung', 'artificial', 'künstliches leben', 'menschliche fähigkeiten', 'allgemeinem verständnis', 'kommunikationswissenschaft'}
 
 
 def test_italian():
@@ -87,7 +87,7 @@ def test_italian():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'it', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'intelligenza artificiale', 'sistema intelligente', 'ragionamento', 'umanità', 'esseri umani', 'pratici', 'filosofi', 'informatica', 'logica', 'modo analogo'}
+    assert set(keyphrases) == {'intelligenza artificiale', 'sistema intelligente', 'intelligenza umana', 'pensiero umano', 'ragionamento', 'filosofi', 'sistemi informatici', 'umanità', 'esseri umani', 'logica'}
 
 
 def test_japanese():
@@ -95,7 +95,7 @@ def test_japanese():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'ja', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'言語運用', '人工知能（じんこうちのう', '人工知能', 'ai教育研究', '手順（アルゴリズム', '研究分野', '応用例', '専門家', 'データ（事前情報', 'コンピューター'}
+    assert set(keyphrases) == {'言語運用', '人工知能研究', '人工知能（じんこうちのう', 'ai教育研究', '手順（アルゴリズム', '研究分野', '応用例', '専門家', 'データ（事前情報', 'コンピュータ上'}
 
 
 def test_norwegian_bokmal():
@@ -111,7 +111,7 @@ def test_portuguese():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'pt', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'máquinas inteligentes', 'inteligência', 'processos cognitivos', 'artificial', 'sistemas especialistas', 'raciocínio', 'perspectivas teóricas', 'visão computacional', 'capacidades humanas', 'compreensão'}
+    assert set(keyphrases) == {'inteligência artificial', 'inteligência própria', 'máquinas inteligentes', 'sistemas inteligentes', 'processos cognitivos', 'artificial', 'compreensão intuitiva', 'sistemas especialistas', 'raciocínio', 'perspectivas teóricas'}
 
 
 def test_spanish():
@@ -119,7 +119,7 @@ def test_spanish():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'es', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'máquinas inteligentes', 'inteligencia', 'robots', 'complejas redes neuronales', 'automatiza', 'algoritmos', 'avances tecnológicos', 'determinadas funcionalidades', 'cerebro humano', 'utilidad'}
+    assert set(keyphrases) == {'inteligencia artificial', 'máquinas inteligentes', 'robots', 'complejas redes neuronales', 'automatiza', 'máquinas capaces', 'algoritmos', 'avances tecnológicos', 'determinadas funcionalidades', 'cerebro humano'}
 
 
 def test_swedish():
@@ -127,7 +127,7 @@ def test_swedish():
     model = LMRank()
     results = model.extract_keyphrases(text, language_code = 'sv', top_n = 10)
     keyphrases = [i[0] for i in results]
-    assert set(keyphrases) == {'ai-forskningen', 'konstgjorda varelser', 'forskningsområdet', 'filosofiska frågor', 'speciella tillämpningar', 'etiken', 'vetenskapen', 'specifika problem', 'delområden', 'kontakt'}
+    assert set(keyphrases) == {'ai-forskningen', 'konstgjorda varelser', 'forskningsområdet', 'filosofiska frågor', 'speciella tillämpningar', 'etiken', 'vetenskapen', 'specifika problem', 'vissa delområden', 'kontakt'}
 
 
 def test_languages():

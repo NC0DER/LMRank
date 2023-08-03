@@ -205,13 +205,20 @@ class LMRank:
         # Since the candidate keyphrases are already sorted, 
         # the shortest phrase is kept.
         if deduplicate:
+            # Use a higher string similarity cutoff for non-english languages.
+            string_similarity = 0.65 if language_code == 'en' else 0.75
+
             for item in list(candidate_keyphrases):
                 close_matches = get_close_matches(item, candidate_keyphrases.keys(), 
                                                   cutoff = 0.65, n = top_n)[1:]
                 for close_match in close_matches:
-                    # This check removes longer keyphrases.
-                    if len(close_match) > len(item):
-                        del candidate_keyphrases[close_match]
+                    # This check removes overlapping keywords and longer overlapping keyphrases.
+                    if not item.count(' '):
+                        candidate_keyphrases.pop(item, None)
+                        break
+                    elif (len(close_match) > len(item)
+                           and len(get_close_matches(item, [close_match], n = 1, cutoff = string_similarity))):
+                        candidate_keyphrases.pop(close_match, None)      
 
         return list(candidate_keyphrases.items())
 

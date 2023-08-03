@@ -107,7 +107,7 @@ def form_candidate_keyphrases_as_noun_phrases(
 
     # Keep all noun phrases that have more than two characters.
     noun_phrases_occurences = [
-        (remove_last_seps(doc[start:end].text, sentence_seps), start)
+        (remove_last_seps(doc[start:end].text, sentence_seps).lower(), start)
         for _, start, end in matcher(doc)
         if len(doc[start:end].text) > 2
     ]
@@ -144,8 +144,9 @@ def form_candidate_keyphrases_as_noun_phrases(
     for noun_phrase in candidate_keyphrases_copy:
         for other_phrase in candidate_keyphrases_copy:
             if (noun_phrase != other_phrase
-                 and noun_phrase.split()[-1] == other_phrase.split()[0]):
-                del candidate_keyphrases[noun_phrase]
+                 and noun_phrase.rsplit(maxsplit = 1)[-1]
+                     == other_phrase.split(maxsplit = 1)[0]):
+                candidate_keyphrases.pop(noun_phrase, None)
                 break
 
     return candidate_keyphrases
