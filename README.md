@@ -15,7 +15,9 @@ LMRank is a keyphrase extraction approach, that builds on recent advancements in
 If you have any practical or research questions take a quick look at the [FAQ](https://github.com/NC0DER/LMRank/wiki/Frequently-Asked-Questions-(FAQ)). As shown in the FAQ, LMRank currently supports 14 languages including English, Greek and others.
 
 ## Installation
-* Run `pip install git+https://github.com/NC0DER/LMRank/`
+```
+pip install git+https://github.com/NC0DER/LMRank/
+```
 
 ## Example
 ```python
@@ -42,19 +44,32 @@ print(results)
 ## Results
 
 ```python
-[('machine learning', 0.012630817497539287),
-('training data', 0.012126753048877012),
-('data mining', 0.01074470174604561),
-('inferences', 0.010638922139139086),
-('neural networks', 0.010636195886216913),
-('statistical learning', 0.010432026486056019),
-('artificial intelligence', 0.010388909274319064),
-('algorithms', 0.009517552425412449),
-('unsupervised learning', 0.009076004950492262),
-('predictive analytics', 0.008616772762298034)]
+[('conventional algorithms', 0.03220074744562463),
+ ('machine learning', 0.0320379078219184),
+ ('training data', 0.02651275416153127),
+ ('artificial intelligence', 0.023564133570545886),
+ ('computational statistics', 0.018363250279455255),
+ ('speech recognition', 0.017827318362436336),
+ ('computer vision', 0.017721180700768415),
+ ('data', 0.01647833767159313),
+ ('sample data', 0.014187748325602852),
+ ('predictions', 0.014133139194664955)]
 ```
 
 To see a list of supported languages and their codes, see the [FAQ](https://github.com/NC0DER/LMRank/wiki/Frequently-Asked-Questions-(FAQ)).
+
+## Citation
+Please use the following BibTeX entry to cite `LMRank` if you use it in your research work:
+
+```bibtex
+@article{giarelis2023lmrank,
+  title={LMRank: Utilizing pre-trained language models and dependency parsing for keyphrase extraction},
+  author={Giarelis, Nikolaos and Karacapilidis, Nikos},
+  journal={IEEE Access},
+  year={2023},
+  publisher={IEEE}
+}
+```
 
 ## Contributors
 * Nikolaos Giarelis (giarelis@ceid.upatras.gr)
