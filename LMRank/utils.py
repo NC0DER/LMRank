@@ -98,7 +98,7 @@ def form_candidate_keyphrases_as_noun_phrases(
     adj_noun_phrases_patterns = [
         [{'POS': 'NOUN', 'OP': '+'}],
         [{'POS': 'ADJ', 'OP': '+'}, {'POS': 'NOUN', 'OP': '+'}],
-        [{'POS': 'PROPN', 'OP': '+'}]
+        [{'POS': 'NOUN', 'OP': '*'}, {'POS': 'PROPN', 'OP': '+'}]
     ]
 
     # Initialize the token matcher with the nlp object vocabulary and add the patterns.
