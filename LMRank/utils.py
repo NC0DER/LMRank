@@ -105,11 +105,13 @@ def form_candidate_keyphrases_as_noun_phrases(
     matcher = Matcher(nlp.vocab)
     matcher.add('AdjNounPhrases', adj_noun_phrases_patterns)
 
-    # Keep all noun phrases that have more than two characters.
+    # Keep all noun phrases that have more than two characters 
+    # and do not have a format like a url or an email.
     noun_phrases_occurences = [
         (remove_last_seps(doc[start:end].text, sentence_seps).lower(), start)
         for _, start, end in matcher(doc)
         if len(doc[start:end].text) > 2
+        and not any(token.like_url or token.like_email for token in doc[start:end])
     ]
 
     # Construct the set of seen keywords 

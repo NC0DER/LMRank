@@ -129,7 +129,7 @@ class LMRank:
         separators that spacy may erroneously keep from the end of the
         string. Candidate keyphrase that start with pronouns or a particle
         (e.g. 'not') or have a length less than two characters or start 
-        with a number are not kept.
+        with a number or have a format like a url or an email are not kept.
 
         Input:
             text: (str)
@@ -187,6 +187,7 @@ class LMRank:
                 )
                 and len(chunk.text) > 2
                 and not chunk.text[:1].isdigit()
+                and not any(term.like_url or term.like_email for term in chunk)
             ]
 
             # Sort noun chunks by keyphrase text and groupby duplicate entries.
