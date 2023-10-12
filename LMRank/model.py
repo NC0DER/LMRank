@@ -151,7 +151,7 @@ class LMRank:
 
             keep_nouns_adjs: (bool)
                 A boolean flag that controls if the candidate keyphrases
-                are composed only from nouns, proper nouns and adjectives.
+                are composed only from nouns and adjectives.
 
         Output: 
             <object>: (List[Tuple[str, int]])
@@ -182,7 +182,7 @@ class LMRank:
                 if chunk.text.lower() not in nlp.Defaults.stop_words
                 and chunk[0].pos_ not in {'PRON', 'PART'}
                 and all(
-                    term.pos_ in {'PROPN','NOUN', 'ADJ'} 
+                    term.pos_ in {'NOUN', 'ADJ'}
                     if keep_nouns_adjs else True for term in chunk
                 )
                 and len(chunk.text) > 2
