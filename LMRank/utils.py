@@ -122,12 +122,13 @@ def form_candidate_keyphrases_as_noun_phrases(
         if noun_phrase.count(' ')
         for word in noun_phrase.split()
     }
-    
+
     # Keep only the unseen keywords.
     refined_noun_phrases_occurences = [
         (noun_phrase, occurence) 
         for noun_phrase, occurence in noun_phrases_occurences
-        if noun_phrase.count(' ') or not noun_phrase in seen
+        if noun_phrase != '' and not noun_phrase.isspace()
+        and (noun_phrase.count(' ') or not noun_phrase in seen)
     ]
 
     # Sort noun phrases by keyphrase text and groupby duplicate entries.
